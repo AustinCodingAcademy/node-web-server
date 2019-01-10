@@ -16,7 +16,7 @@ A starter repo for the ACA Advanced `My First Web Server` project.
 * Assign an _id property to the user object that is a number that increments by 1 each time.
 * Send the newly created user object back to the client
 
-## Part 4. Use path variables
+## Part 3. Use path variables
 * Give your server the ability to respond to a GET request with a path `/users/:userId` and return the user object from the users array that has the _id == userId
 * Give your server the ability to respond to a PUT request with a path `/users/:userId` and just change any key value on the user object with this _id 
 * Give your server the ability to respond to a DELETE request with a path `/users/:userId` and find the user with this id from the array. give this user object a new key value isActive:false.  send() back a messsage "deleted"
