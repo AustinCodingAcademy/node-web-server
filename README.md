@@ -11,10 +11,10 @@ A starter repo for the ACA Advanced `My First Web Server` project.
 * Give your server the ability to respond to a DELETE request with a path "/users/1" and remove one item from the users array. send() back a messsage "deleted"
 
 
-## Part 3. Add the body-parser module to your project
-* Give your server the ability to handle a POST request with a path "/users" and add the data from the client to the users array
+## Part 2. Body
+* Give your server the ability to handle a POST request with a path "/users" and add the body from the client to the users array
 * Assign an _id property to the user object that is a number that increments by 1 each time.
-* response.json() the user object to send it back to the client. (if you do another GET request you should see this added)
+* Send the newly created user object back to the client
 
 ## Part 4. Use path variables
 * Give your server the ability to respond to a GET request with a path `/users/:userId` and return the user object from the users array that has the _id == userId
