@@ -35,17 +35,34 @@ function messageReceived(req, res) {
       let user = JSON.parse(body);
       users.push(user);
     });
-   }
-   else if(req.method === "POST" && req.url === "/products"){
+  }
+  else if(req.method === "POST" && req.url === "/products"){
+   let body = [];
+   req.on('data', (chunk) => {
+     body.push(chunk);
+   }).on('end', () => {
+     body = Buffer.concat(body).toString();
+     let product = JSON.parse(body);
+     products.push(product);
+   });
+  }
+  else if(req.method === "PUT" && req.url.indexOf("/users/") > -1){
+    let id = req.url.split("/");
+    let user = users.find(p=>p["id"] == id[2]);
     let body = [];
     req.on('data', (chunk) => {
       body.push(chunk);
     }).on('end', () => {
       body = Buffer.concat(body).toString();
-      let product = JSON.parse(body);
-      products.push(product);
+      body = JSON.parse(body);
+      user.name = body.name;
     });
-   }
+  }
+  else if(req.method === "DELETE" && req.url.indexOf("/users/") > -1){
+    let id = req.url.split("/");
+    // let user = users.find(p=>p["id"] == id[2]);
+    users.splice(id-1, 1)
+  }
   else{
    res.write("Not Found");
   }
