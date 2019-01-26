@@ -33,7 +33,7 @@ exports.users = [
 
 exports.products = [
   {
-    "id": 1,
+    "_id": 1,
     "name": "Body Luxuries Sweet Lavender Hand Sanitizer",
     "description": "Makes your hands clean",
     "rating": 2,
@@ -84,7 +84,7 @@ exports.products = [
     ]
   },
   {
-    "id": 2,
+    "_id": 2,
     "name": "Topiramate",
     "description": "A wonderful medicine that makes everything all better",
     "rating": 2,
@@ -115,7 +115,7 @@ exports.products = [
     ]
   },
   {
-    "id": 3,
+    "_id": 3,
     "name": "Almond",
     "description": "A great treat that tastes great",
     "rating": 5,
@@ -138,7 +138,7 @@ exports.products = [
     ]
   },
   {
-    "id": 4,
+    "_id": 4,
     "name": "VYTORIN",
     "description": "Orchard as the place of occurrence of the external cause",
     "rating": 3,
@@ -161,7 +161,7 @@ exports.products = [
     ]
   },
   {
-    "id": 5,
+    "_id": 5,
     "name": "Decolorized Iodine",
     "description": "Kills germs on contact",
     "rating": 1,
@@ -184,7 +184,7 @@ exports.products = [
     ]
   },
   {
-    "id": 6,
+    "_id": 6,
     "name": "Fresh Sugar Honey Tinted Lip Treatment SPF15",
     "description": "Fix those chapped lips. ",
     "rating": 3,
@@ -207,7 +207,7 @@ exports.products = [
     ]
   },
   {
-    "id": 7,
+    "_id": 7,
     "name": "LBel",
     "description": "2-Propanol",
     "rating": 3,
@@ -230,7 +230,7 @@ exports.products = [
     ]
   },
   {
-    "id": 8,
+    "_id": 8,
     "name": "Cholestyramine",
     "description": "Help reduce cholesteral in the system",
     "rating": 3,
@@ -253,7 +253,7 @@ exports.products = [
     ]
   },
   {
-    "id": 9,
+    "_id": 9,
     "name": "Risperidone",
     "description": "cephalospor/oth beta-lactm antibiot, undet, sequela",
     "rating": 1,
@@ -276,7 +276,7 @@ exports.products = [
     ]
   },
   {
-    "id": 10,
+    "_id": 10,
     "name": "MAC",
     "description": "Other Gram-negative sepsis",
     "rating": 2,
