@@ -33,6 +33,7 @@ function messageReceived(req, res) {
     }).on('end', () => {
       body = Buffer.concat(body).toString();
       let user = JSON.parse(body);
+      user.id = users.length+1;
       users.push(user);
     });
   }
@@ -60,7 +61,6 @@ function messageReceived(req, res) {
   }
   else if(req.method === "DELETE" && req.url.indexOf("/users/") > -1){
     let id = req.url.split("/");
-    // let user = users.find(p=>p["id"] == id[2]);
     users.splice(id-1, 1)
   }
   else{
