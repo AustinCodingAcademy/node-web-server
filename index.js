@@ -64,6 +64,18 @@ function messageReceived(req, res) {
             res.end();
         }
     }
+    else if (req.method == "DELETE") {
+        toDisplay = markElementAsDeletedById(req.url);
+        let httpVerb = 400;
+        
+        if (toDisplay) {
+            httpVerb = 200;
+            toDisplay = "deleted";
+        }
+        res.writeHead(httpVerb, {'Content-Type': 'application/json'});
+        res.write(JSON.stringify(toDisplay));
+        res.end();
+    }
     else {
         toDisplay = "METHOD NOT ALLOWED";
         res.writeHead(400, {'Content-Type': 'text/plain'});
@@ -73,13 +85,31 @@ function messageReceived(req, res) {
 }
 
 
+function markElementAsDeletedById(url) {
+    let success = true;
+    let elements = getElementsFromRequest(url);
+
+    //A single element got returned
+    if (elements && elements.length == null) {
+        elements.isActive = false;
+    }
+    //Either no element or all elements got returned
+    else {
+        success = false;
+    }
+    return success;
+}
+
+
 function markElementAsModifiedById(url) {
     let success = true;
     let elements = getElementsFromRequest(url);
 
+    //A single element got returned
     if (elements && elements.length == null) {
         elements._modified = true;
     }
+    //Either no element or all elements got returned
     else {
         success = false;
     }
