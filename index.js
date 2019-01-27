@@ -13,61 +13,113 @@ function messageReceived(req, res) {
     let toDisplay = "Complete";
 
     if (req.method === "GET") {
-        var idToFetchRegEx = /\d+/g;
-        let idToFetch = idToFetchRegEx.exec(req.url);
-
-
-        if (req.url.toLowerCase().includes("/users")) {
-
-            if (idToFetch && idToFetch.length > 0) {
-                toDisplay = JSON.stringify(getRecordById(idToFetch.join(), users));
-            }
-            else {
-                toDisplay = JSON.stringify(users);
-            }
+        toDisplay = getRecordsToDisplayOnGetRequest(req.url);
+        res.writeHead(200, {'Content-Type': 'application/json'});
+        res.write(toDisplay);
+        res.end();
+    }
+    else if (req.method == "PUT") {
+        toDisplay = markElementAsModifiedById(req.url);
+        let httpVerb = 400;
+        
+        if (toDisplay) {
+            httpVerb = 204;
         }
-        else if (req.url.toLowerCase().includes("/products")) {
-
-            if (idToFetch && idToFetch.length > 0) {
-                toDisplay = JSON.stringify(getRecordById(idToFetch.join(), products));
-            }
-            else {
-                toDisplay = JSON.stringify(products);
-            }
-        }
-        else {
-            toDisplay = "What???";
-        }
+        res.writeHead(httpVerb, {'Content-Type': 'application/json'});
+        res.write(JSON.stringify(toDisplay));
+        res.end();
     }
     else if (req.method == "POST") {
         let body = [];
 
-        if (req.url == "/users") {
+        if (req.url == "/users" || req.url == "/products") {
             req.on('data', (chunk) => {
                 body.push(chunk);
             }).on('end', () => {
                 body = Buffer.concat(body).toString();
-                let user = JSON.parse(body);
-                users.push(user);
+
+                let element = JSON.parse(body);
+
+                if (req.url == "/users") {
+                    element._id = users.length + 1;
+                    users.push(element);
+                }
+                else {
+                    element._id = products.length + 1;
+                    products.push(element);
+                } 
+ 
+                toDisplay = JSON.stringify(element);
+                
+                res.writeHead(200, {'Content-Type': 'application/json'});
+                res.write(toDisplay);
+                res.end();
             });
         }
-        else if (req.url == "/products") {
-            req.on('data', (chunk) => {
-                body.push(chunk);
-            }).on('end', () => {
-                body = Buffer.concat(body).toString();
-                let product = JSON.parse(body);
-                products.push(product);
-            });
+        else {
+            toDisplay = JSON.stringify("ERROR: Not a valid element");
+            
+            res.writeHead(400, {'Content-Type': 'text/plain'});
+            res.write(toDisplay);
+            res.end();
         }
     }
-
-    res.writeHead(200, {'Content-Type': 'text/plain'});
-    res.write(toDisplay);
-    res.end();
+    else {
+        toDisplay = "METHOD NOT ALLOWED";
+        res.writeHead(400, {'Content-Type': 'text/plain'});
+        res.write(toDisplay);
+        res.end();
+    }
 }
 
 
+function markElementAsModifiedById(url) {
+    let success = true;
+    let elements = getElementsFromRequest(url);
+
+    if (elements && elements.length == null) {
+        elements._modified = true;
+    }
+    else {
+        success = false;
+    }
+    return success;
+}
+
+function getElementsFromRequest(url) {
+    let idToFetchRegEx = /\d+/g;
+    let idToFetch = idToFetchRegEx.exec(url);
+
+    let toReturn;
+
+    if (url.toLowerCase().includes("/users")) {
+
+        if (idToFetch && idToFetch.length > 0) {
+            toReturn = getRecordById(idToFetch.join(), users);
+        }
+        else {
+            toReturn = users;
+        }
+    }
+    else if (url.toLowerCase().includes("/products")) {
+
+        if (idToFetch && idToFetch.length > 0) {
+            toReturn = getRecordById(idToFetch.join(), products);
+        }
+        else {
+            toReturn = products;
+        }
+    }
+    else {
+        toReturn = null;
+    }
+    return toReturn;
+}
+
+
+function getRecordsToDisplayOnGetRequest(url) {
+    return JSON.stringify(getElementsFromRequest(url));
+}
 
 function getRecordById(id, myArray) {
     let result = myArray.find( element => element._id == id );
@@ -75,6 +127,6 @@ function getRecordById(id, myArray) {
     if (result)
         return result;
     else
-        return "Element Not Found"
+        return null;
 }
 
