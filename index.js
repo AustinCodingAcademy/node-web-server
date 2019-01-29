@@ -68,7 +68,7 @@ function messageReceived(req, res) {
     let urlselected = requestSelector(firstTerm)
     let usersJSON = JSON.stringify(urlselected);
     res.end(usersJSON);
-  }else if(req.method === "POST" && !secondTerm){
+  }else if(req.method === "POST"){
     let urlselected = requestSelector(firstTerm)
     postChucks(req, res,urlselected);
     // takes in a request, a response and an array to push the chunck to
