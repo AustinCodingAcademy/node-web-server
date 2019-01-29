@@ -34,8 +34,18 @@ function messageReceived(req, res) {
           user._id = users.length + 1;
           users.push(user)
         });
+    } else if(req.method === 'PUT' && req.url === ('/users/1')){
+        let body = [];
+        req.on('data', (chunk) => {
+          body.push(chunk);
+        }).on('end', () => {
+          body = Buffer.concat(body).toString();
+          let user = JSON.parse(body);
+          users.push(user)
+
+        })
     } else {
         res.write("not found, oops!")
     }
-    res.end();
+    res.end('ended');
 }
