@@ -11,13 +11,13 @@
 
 
       if(req.method === "GET" && req.url.indexOf("/users/") > -1){
-        let id = req.url.split("/");
-        let user = users.find(p=>p["_id"] == id[2]);
-        let product = products.find(p=>p["_id"] == id[2]);
-        let usersJSON = JSON.stringify(user);
-        let productsJSON = JSON.stringify(product);
-        res.write(usersJSON);
-        res.write(productsJSON);
+       let id = req.url.split("/");
+       let user = users.find(p=>p["_id"] == id[2]);
+       let product = products.find(p=>p["_id"] == id[2]);
+       let usersJSON = JSON.stringify(user);
+       let productsJSON = JSON.stringify(product);
+       res.write(usersJSON);
+       res.write(productsJSON);
 
 
     }
