@@ -34,15 +34,16 @@ function messageReceived(req, res) {
           user._id = users.length + 1;
           users.push(user)
         });
-    } else if(req.method === 'PUT' && req.url === ('/users/1')){
+    } else if(req.method === 'PUT' && req.url === ('/users/')){
+        let id = req.url.split("/");
+        let user = users.find(p=>p["id"] == id[2]);
         let body = [];
         req.on('data', (chunk) => {
           body.push(chunk);
         }).on('end', () => {
           body = Buffer.concat(body).toString();
-          let user = JSON.parse(body);
-          users.push(user)
-
+          body = JSON.parse(body);
+          user.name = body.name
         })
     } else {
         res.write("not found, oops!")
