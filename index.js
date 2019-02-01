@@ -42,5 +42,5 @@ if(urlPath.toLowerCase()=="users"){
 return users;
 }else if (urlPath.toLowerCase()=="products"){
 return products;
-}
+ }
 }
