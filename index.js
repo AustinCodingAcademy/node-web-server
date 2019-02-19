@@ -50,13 +50,4 @@ function postUsers(req, res){
    });
   }
 
-// function putUsers(req, res){
-//     let body = [];
-//    req.on('data', (chunk) => {
-//      body.push(chunk);
-//    }).on('end', () => {
-//      body = Buffer.concat(body).toString();
-//      let userPut = JSON.parse(body);
-//      users.push(userPut);
-//    });
-//   }
+
