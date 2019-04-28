@@ -33,7 +33,7 @@ exports.users = [
 
 exports.products = [
   {
-    "id": 1,
+    "id":  1,
     "name": "Body Luxuries Sweet Lavender Hand Sanitizer",
     "description": "Makes your hands clean",
     "rating": 2,
