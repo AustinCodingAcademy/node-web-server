@@ -23,9 +23,9 @@ let server = http.createServer(function (req, res) {
         }).on('end', () => {
             body = Buffer.concat(body).toString();
             let user = JSON.parse(body);
-            let lastIndex = users.length - 1
-            user._id = users[lastIndex]._id + 1
+            user._id = users[users.length - 1]._id + 1
             users.push(user);
+            res.write(user)
         })
     }
     if (req.method === "PUT" && req.url.indexOf("/users/") > -1) {
