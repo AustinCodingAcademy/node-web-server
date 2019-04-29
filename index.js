@@ -25,6 +25,7 @@ let server = http.createServer(function (req, res) {
             let user = JSON.parse(body);
             user._id = users[users.length - 1]._id + 1
             users.push(user);
+            user = JSON.stringify(user)
             res.write(user)
         })
     }
