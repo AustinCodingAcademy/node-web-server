@@ -15,6 +15,12 @@ function messageReceived(req, res) {
         res.end()
     }
 
+    // get all products:
+    else if( req.method === 'GET' && req.url === '/products' ) {
+        res.write( JSON.stringify(products) );
+        res.end();
+    }
+
     // get specific user by id:
     else if( req.method === 'GET' && req.url.indexOf('/users') > -1 ) {
         let id = req.url.split('/');
@@ -27,6 +33,17 @@ function messageReceived(req, res) {
             res.write(userJSON);
         }
         res.end()
+    }
+
+    // get specific product by id:
+    else if( req.method === 'GET' && req.url.indexOf('/products') > -1 ) {
+        let id = req.url.split('/');
+        let product = products.find( p => p['_id'] === Number(id[2]) );
+        if(!product) res.write('Product not found')
+        else {
+            let productJSON = JSON.stringify(product);
+            res.write(productJSON);
+        }
     }
 
     // post a new user:
@@ -52,9 +69,9 @@ function messageReceived(req, res) {
         })
     }
 
-    // else {
-    //     res.write('Not Found')
-    // }
+    else {
+        res.write('Not Found')
+    }
 
     // res.end();
 }
