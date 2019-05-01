@@ -36,19 +36,42 @@ function messageReceived(req, res) {
     }
 
     // get specific product by id:
-    else if( req.method === 'GET' && req.url.indexOf('/products') > -1 ) {
+    else if( req.method === 'GET' && req.url.indexOf('/products/') > -1 ) {
         let id = req.url.split('/');
-        let product = products.find( p => p['_id'] === Number(id[2]) );
+        let product = products.find( p => p['id'] === Number(id[2]) );
         if(!product) res.write('Product not found')
         else {
             let productJSON = JSON.stringify(product);
             res.write(productJSON);
         }
+        res.end();
     }
 
     // post a new user:
     else if( req.method === 'POST' && req.url === '/users' ) {
         postUsers(req, res);
+    }
+
+    // post a new product:
+    else if( req.method === 'POST' && req.url === '/products' ) {
+        let body = [];
+        req.on( 'data', (chunk) => {
+            body.push(chunk);
+        }).on( 'end', () => {
+            body = Buffer.concat(body).toString();
+            // parse JSON to create an object(s) from the body:
+            let product = JSON.parse(body);
+            
+            // add _id property to new product:
+            product.id = products.length + 1;
+    
+            // push new product to products array in state.js:
+            products.push(product);
+            
+            // return the data we just updated to the client:
+            res.write(JSON.stringify(product));
+            res.end();
+        })
     }
 
     // change a user:
@@ -67,6 +90,50 @@ function messageReceived(req, res) {
             res.write(JSON.stringify(user))
             res.end();
         })
+    }
+
+    // change a product:
+    else if( req.method === 'PUT' && req.url.indexOf('/products/') > -1 ) {
+        let body = [];
+        let id = req.url.split('/');
+        let product = products.find( u => u['id'] === Number(id[2]) );
+    
+        req.on( 'data', (chunk) => {
+            body.push(chunk);
+        }).on( 'end', () => {
+            body = Buffer.concat(body).toString();
+            body = JSON.parse(body);
+            product.description = body.description;
+            res.write(JSON.stringify(product))
+            res.end();
+        })
+    }
+
+    // delete a user:
+    else if( req.method === 'DELETE' && req.url.indexOf('/users/') > -1 ) {
+        let id = req.url.split('/');
+        let user = users.find( u => u['_id'] === Number(id[2]) );
+        if(!user) {
+            res.write('User Not Found');
+        }
+        else {
+            user.isActive = false;
+            res.write(`Deleted user ${user._id}: ${user.name}`);
+        }
+        res.end()
+    }
+
+    else if( req.method === 'DELETE' && req.url.indexOf('/products/') > -1 ) {
+        let id = req.url.split('/');
+        let product = products.find( p => p['id'] === Number(id[2]) );
+        if(!product) {
+            res.write('Product not found');
+        }
+        else {
+            product.isActive = false;
+            res.write(`Deleted product #${product.id}: ${product.name}`);
+        }
+        res.end();
     }
 
     else {
