@@ -24,11 +24,10 @@ function messageReceived(req, res) {
     req.on('data', (chunk)=>{
         body.push(chunk);
     }).on('end', ()=>{
-        body = Buffer.concat(body).toString();
+     body = Buffer.concat(body).toString();
      let user = JSON.parse(body);
+     user.id = users.length+1;
      users.push(user);
-     res.write(user);
-     res.end();
     });
  } 
  else if(req.method === "PUT" && req.url.indexOf("/users/")> -1){
