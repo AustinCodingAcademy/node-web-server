@@ -39,13 +39,14 @@ function messageReceived(req,res){
        users.shift();
        res.write("deleted")
     }
+    //part 3:
     else if(req.method === "GET" && req.url.indexOf("/users/") > -1){
         let id = req.url.split("/");
         let user = users.find(u=>u["_id"] == id[2]);
         let usersJSON = JSON.stringify(user);
         res.write(usersJSON);
       }
-    
+      
     else{
         res.write("Sorry, not found")
     }
