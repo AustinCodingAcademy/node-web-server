@@ -15,7 +15,7 @@ This is not for a grade.
 
 ## Part 2. Body
 * Give your server the ability to handle a POST request with a path "/users" and add the body from the client to the users array
-* Assign an _id property to the user object that is a number that increments by 1 each time.
+* Assign an id property to the user object that is a number that increments by 1 each time.
 * Send the newly created user object back to the client
 
 ## Part 3. Use more flexible code - Use split to get the id from the path 
