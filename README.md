@@ -1,6 +1,8 @@
 # My First Web Server
 
-A starter repo for the ACA Advanced `My First Web Server` project.
+A starter repo for the ACA 311 `My First Node Web Server` project.
+As you do each part, you can remove the code from the previous part or do each part in different files.
+This is not for a grade.
 
 
 ## Part 1.
